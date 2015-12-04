@@ -1,8 +1,7 @@
 # file-o-meter
 WebBased Document Management System 
 
--- initial commit from sourceforge repository
-
+    initial commit from sourceforge repository
 
 
 Features & functions
