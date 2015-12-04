@@ -11,3 +11,8 @@ Description - latest
 File-O-Meter development was stopped by the origin developers of http://www.file-o-meter.de. Support and assistance cannot be given.
 
 File-O-Meter is a web-based Document Management System for filing and archiving documents and files. File-O-Meter provides a corporate platform for cooperation, collaboration and data sharing, accessible via internet.
+
+
+----------------------------------------------------------------
+
+File-O-Meter is free software ("Open Source") and published under the terms of the GNU General Public License v3. 
