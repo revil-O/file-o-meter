@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/access/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="access" targetNamespace="http://www.example.org/access/">
+  <wsdl:message name="ws_loginRequest">
+  	<wsdl:part name="pw" type="xsd:string"/>
+  	<wsdl:part name="user" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ws_loginResponse">
+  	<wsdl:part name="ws_loginResponse" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="chk_ws_keyRequest">
+  	<wsdl:part name="ws_key" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="chk_ws_keyResponse">
+  	<wsdl:part name="chk_ws_keyResponse" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  
+  <wsdl:message name="ws_login_faultMsg"><wsdl:part name="fault" type="xsd:string"></wsdl:part></wsdl:message>
+  <wsdl:portType name="access">
+    <wsdl:operation name="ws_login">
+    	<wsdl:input message="tns:ws_loginRequest"></wsdl:input>
+    	<wsdl:output message="tns:ws_loginResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chk_ws_key">
+    	<wsdl:input message="tns:chk_ws_keyRequest"></wsdl:input>
+    	<wsdl:output message="tns:chk_ws_keyResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="accessSOAP" type="tns:access">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ws_login">
+		<soap:operation soapAction="http://www.example.org/access/NewOperation"/>
+		<wsdl:input>
+			<soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/access/" use="encoded"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/access/" use="encoded"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="chk_ws_key">
+		<soap:operation soapAction="http://www.example.org/access/NewOperation"/>
+		<wsdl:input>
+			<soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/access/" use="encoded"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/access/" use="encoded"/>
+		</wsdl:output>
+	</wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="access">
+    <wsdl:port binding="tns:accessSOAP" name="accessSOAP">
+      <soap:address location="http://yourdomain.com/web_services/access.php"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,722 @@
+Version 0.6b
+	bugfixing:
+		folder/add_folder.php							fix a bug in js text output
+		folder/add_newfile.php							fix a bug in js text output
+		folder/add_newlink.php							fix a bug in js text output
+		folder/add_subfile.php							fix a bug in js text output
+		folder/add_export.php							fix a bug in js text output
+		folder/add_import.php							fix a bug in js text output
+		folder/job.php									fix a bug in file upload
+		folder/edit_folder.php							fix a bug in js text output
+		folder/edit_link.php							fix a bug in js text output
+		folder/edit_lock_file.php						fix a bug in the access check
+		folder/multiupload.php							fix a bug in js text output
+		inc/class/FileJobs.php							fix a bug in copy_to_fileserver()
+		inc/download.php								fix a bug in filedownload
+		inc/js_general.js								fix a bug in js text output
+		logbook/main.php								fix a bug in js text output
+		project/restore_project.php						fix a bug in js text output
+		setup/edit_backup.php							fix a bug in js text output
+		setup/edit_document_type.php					fix a bug in js text output
+		user/add_user.php								fix a bug in js text output
+		user/edit_user.php								fix a bug in js text output
+		user/job.php									fix a bug in edit usergroup
+		user_group/edit_user_folder.php					fix a bug in js text output
+		user_group/edit_usergroup_folder.php			fix a bug in js text output
+	
+	edit file
+		cj/cj.php										add clear_login_session()
+														add mailnotification
+		folder/job.php									add mailnotification events
+		inc/class/Access.php							new Accesskey _LOGBOOK_V added in get_other_access_options()
+		inc/class/FileFolderDel.php						add project trash
+														add project del
+														add mailnotification events
+		inc/class/FileJobs.php							add mailnotification events												
+		inc/class/Import.php							add mailnotification events
+		inc/class/LinkJobs.php							add mailnotification events
+		inc/class/Logbook.php							Login monitoring added
+		inc/class/Login.php								Login monitoring added
+		inc/class/Mailer.php							add insert_log_mail() from Logbook.php
+														add textMail
+		inc/class/Thumbnail.php							add text/plain Thumbnails 
+		inc/function.php								add page_scroll()
+														add mailnotification menue
+		inc/getsetup.php								add mailtype
+		inc/include.php									add inc/class/MailNotififaction.php
+		project/index.php								add project trash
+														add project del
+		project/job.php									add project trash
+														add project del
+		project/main.php								add project trash
+														add project del
+		setup/edit_mail.php								add mailtype
+		setup/index.php									Login monitoring
+		setup/job.php									Login monitoring
+														add mailtype
+		setup/main.php									Login monitoring
+														add mailtype
+		template/default/header.php						Menu item added
+														add project del
+		user/main.php									add ORDER BY
+		user_group/add_usergroup.php					add project del
+		user_group/edit_usergroup.php					add project del
+		user_group/job.php								add mailnotification
+		web_service/fom_other.php						add project del
+		
+	add file
+		files/log/mail/									Folder for Maillogs
+		folder/edit_mn.php								Edit Mailnotifications
+		inc/class/Kalender.php							add new class
+		inc/class/MailNotififaction.php					add mailnotification
+		inc/class/PHPExcel/*							add new Excel class
+		logbook/index.php								Login monitoring
+		logbook/job.php									Login monitoring
+		logbook/main.php								Login monitoring
+		project/del_project.php							add project del
+		project/restore_project.php						add project del
+		setup/edit_logbook.php							Login monitoring
+		template/default/DejaVuSansMono.ttf				add text/plain Thumbnails
+		
+	del files
+		inc/class/pear/*								del Excel class		
+
+	edit DB
+		CREATE TEMPORARY TABLE fom_mn_tmp (
+		pfad varchar(255) default NULL,
+		org_name varchar(255) default NULL,
+		event varchar(50) default NULL,
+		event_time varchar(14) default NULL,
+		user_name varchar(255) default NULL,
+		projekt_id int(10) unsigned default NULL)
+	
+		CREATE TABLE fom_mn_log (
+		 log_id int(10) unsigned NOT NULL auto_increment,
+		 id int(10) unsigned default NULL,
+		 user_id int(10) unsigned default NULL,
+		 org_name varchar(255) default NULL,
+		 event varchar(50) default NULL,
+		 event_time varchar(14) default NULL,
+		 PRIMARY KEY  (log_id),
+		 KEY event_index (event(4))
+		) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Speichert alle Events die per E-Mailbenachrichtigung versend'
+		
+		CREATE TABLE fom_mn_setup (
+		 user_id int(10) unsigned default NULL,
+		 projekt_id int(10) unsigned default NULL,
+		 mn_setup text,
+		 UNIQUE KEY user_project_index (user_id,projekt_id)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Speichert bei welchem event der User eine Mailbenachrichtigu'
+	
+		ALTER TABLE fom_projekte ADD anzeigen SET('0', '1') NULL DEFAULT '1';
+	
+		CREATE TABLE fom_log_login (
+		log_id int(10) unsigned NOT NULL auto_increment,
+		user_id int(10) unsigned NOT NULL default '0',
+		login_time varchar(14) default NULL,
+		logout_time varchar(14) default NULL,
+		ip varchar(29) default NULL,
+		login_session varchar(32) default NULL,
+		login_type set('local','webservice') NOT NULL default 'local',
+		PRIMARY KEY  (log_id),
+		KEY session_index (login_session),
+		KEY login_time_index (login_time(8)),
+		KEY user_id_index (user_id),
+		KEY login_type_index (login_type)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Speichert alle Login und Logout Aktivitaeten';
+		
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (360, NULL, 'system', NULL, 'Logbuch', 'Logbook');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (361, NULL, 'calendar', NULL, 'TT', 'DD');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (362, NULL, 'calendar', NULL, 'MM', 'MM');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (363, NULL, 'calendar', NULL, 'JJJJ', 'YYYY');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (364, NULL, 'system', NULL, 'Anzahl', 'Number');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (365, NULL, 'system', NULL, 'M&ouml;chten Sie diesen Eintrag wirklich l&ouml;schen?', 'Do you really want to delete this entry?');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (366, NULL, 'success_message', NULL, 'Der Eintrag wurde gel&ouml;scht.', 'The entry has been deleted.');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (367, NULL, 'system', NULL, 'Login', 'Login');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (368, NULL, 'system', NULL, 'Logout', 'Logout');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (369, NULL, 'system', NULL, 'Dauer', 'Duration');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (370, NULL, 'system', 'IP Adresse', 'IP', 'IP');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (371, NULL, 'system', NULL, 'Logindatum von', 'Login date from');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (372, NULL, 'system', NULL, 'Logindatum bis', 'Login date to');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (373, NULL, 'system', NULL, 'Lokales Login', 'Local Login');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (374, NULL, 'system', NULL, 'Webservice Login', 'Webservice Login');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (375, NULL, 'system', NULL, 'Logintyp', 'Logintype');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (376, NULL, 'system', NULL, 'Aktuelle Auswahl L&ouml;schen', 'Delete current selection');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (377, NULL, 'system', NULL, 'Verzeichnis download', 'Download directory');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (378, NULL, 'system', NULL, 'M&ouml;chten Sie wirklich das Verzeichnis Downloaden?', 'Do you really want to download this directory?');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (379, NULL, 'system', NULL, 'Achtung: je nach gr&ouml;&szlig;e des Verzeichnisses kann der Vorgang mehrere Minuten dauern!', 'Note: depending on the size of the directory, the process may take several minutes!');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (380, NULL, 'system', NULL, 'Zip &amp; Start Download', 'Zip &amp; Start Download');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (381, NULL, 'system', NULL, 'Projekt l&ouml;schen', 'Delete project');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (382, NULL, 'system', NULL, 'M&ouml;chten Sie wirklich dieses Projekt l&ouml;schen?', 'Do you really want to delete this project?');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (383, NULL, 'system', NULL, 'M&ouml;chten Sie wirklich dieses Projekt inkl. dem gesamten Inhalt endg&uuml;ltig l&ouml;schen?', 'Do you really want to delete permanently this project?');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (384, NULL, 'system', NULL, 'Gel&ouml;schte Objekte anzeigen', 'Show deleted items');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (385, NULL, 'system', NULL, 'Keine Gel&ouml;schten Objekte vorhanden', 'No deleted objects exist');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (386, NULL, 'system', NULL, 'Projekt wiederherstellen', 'project restore');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (387, NULL, 'system', NULL, 'Projekt entg&uuml;ltig l&ouml;schen', 'delete permanently this project');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (388, NULL, 'system', NULL, 'M&ouml;chten Sie wirklich dieses Projekt wiederherstellen?', 'Would you really restore this project?');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (389, NULL, 'system', NULL, 'W&auml;hlen Sie min. eine Datei aus!', 'Select one or more files!');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (390, NULL, 'system', NULL, 'M&ouml;chten Sie wirklich die ausgew&auml;hlten Dateien l&ouml;schen!', 'Would you really delete the selected files!');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (391, NULL, 'system', NULL, 'W&auml;hlen Sie min. ein Verzeichnis aus!', 'Select one or more folder!');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (392, NULL, 'system', NULL, 'M&ouml;chten Sie wirklich die ausgew&auml;hlten Verzeichnisse inkl. Inhalt l&ouml;schen!', 'Would you really delete the selected directories incl. content!');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (393, NULL, 'system', NULL, 'W&auml;hlen Sie min. einen Link aus!', 'Select at least a link!');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (394, NULL, 'system', NULL, 'M&ouml;chten Sie wirklich die ausgew&auml;hlten Links l&ouml;schen!', 'Would you really delete the selected links!');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (395, NULL, 'system', NULL, 'M&uuml;lleimer', 'Trash');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (396, NULL, 'system', NULL, 'Verzeichnis&uuml;bersicht', 'Directory overview');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (397, NULL, 'system', NULL, 'Verzeichnisname', 'directory Name');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (398, NULL, 'system', NULL, 'Pfad', 'path');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (399, NULL, 'system', NULL, 'Alle Ausgew&auml;hlten Verzeichnisse inkl. Inhalt entg&uuml;ltig L&ouml;schen', 'delete all selected directories incl. content');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (400, NULL, 'system', NULL, 'Alle Ausgew&auml;hlten Dateien entg&uuml;ltig L&ouml;schen', 'delete all selected files');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (401, NULL, 'system', NULL, 'Link&uuml;bersicht', 'Link overview');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (402, NULL, 'system', NULL, 'Alle Ausgew&auml;hlten Links entg&uuml;ltig L&ouml;schen', 'delete all selected links');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (403, 'access_mn', 'system', NULL, 'E-Mail Benachrichtigung', 'Mail Notification');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (404, NULL, 'system', NULL, 'E-Mail Typ', 'E-mail type');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (405, NULL, 'system', NULL, 'Text E-Mail', 'Text e-mail');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (406, NULL, 'system', NULL, 'HTML E-Mail', 'HTML e-mail');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (407, NULL, 'system', NULL, 'Verzeichnis angelegt', 'directory created');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (408, NULL, 'system', NULL, 'Verzeichnis bearbeitet', 'edited directory');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (409, NULL, 'system', NULL, 'Verzeichnis kopiert', 'directory copy');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (410, NULL, 'system', NULL, 'Verzeichnis verschoben', 'moved directory');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (411, NULL, 'system', NULL, 'Verzeichnis gel&ouml;scht', 'directory is deleted');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (412, NULL, 'system', NULL, 'Datei hinzugef&uuml;gt', 'file added');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (413, NULL, 'system', NULL, 'Datei bearbeitet', 'edited file');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (414, NULL, 'system', NULL, 'Datei kopiert', 'file copied');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (415, NULL, 'system', NULL, 'Datei verschoben', 'file is moved');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (416, NULL, 'system', NULL, 'Version angelegt', 'version is created');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (417, NULL, 'system', NULL, 'Datei eingecheckt', 'File is checked');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (418, NULL, 'system', NULL, 'Datei ausgecheckt', 'File is checked out');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (419, NULL, 'system', NULL, 'Datei gel&ouml;scht', 'file is deleted');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (420, NULL, 'system', NULL, 'Link hinzugef&uuml;gt', 'link added');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (421, NULL, 'system', NULL, 'Link bearbeitet', 'link edited');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (422, NULL, 'system', NULL, 'Link gel&ouml;scht', 'link deleted');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (423, NULL, 'system', NULL, '&Auml;nderungszeit', 'change time');		
+
+Version 0.5b
+	bugfixing:
+		folder/index.php								Rechtekontrolle beim Löschen
+		folder/multiupload.php							add Support for plupload Version 1.4.3.2
+		inc/download.php								Downloadfehler von Dateien mit Leerzeichen im Namen beseitigt
+		inc/function.php								Rechtekontrolle beim Löschen, bugfix Copy/Move Folder
+		inc/class/FileFolderCopyMove.php				bugfix Copy/Move Folder
+		inc/class/Pdf.php								add Support for tcpdf Version 5.9.082
+		inc/pdf_footer.php								add Support for tcpdf Version 5.9.082
+		inc/pdf_header.php								add Support for tcpdf Version 5.9.082
+		
+	edit file
+		inc/class/MySql.php								add function log_sql_query()
+		folder/index.php								edit useraccount
+		folder/job.php									edit useraccount
+		template/default/header.php						edit useraccount
+	
+	add file
+		folder/edit_useraccount.php						edit useraccount
+	
+	edit DB
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (354, NULL, 'system', NULL, 'Passwort-Wiederholung', 'Repeat password');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (355, NULL, 'system', NULL, 'Derzeitiges Passwort', 'Current password');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (356, NULL, 'system', NULL, 'Neues Passwort', 'New password');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (357, NULL, 'system', NULL, 'Passwort &auml;ndern', 'Change password');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (358, NULL, 'system', NULL, 'Ihre Passwortangaben stimmen nicht &uuml;berein!', 'The entered passwords are not equal!');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (359, NULL, 'system', NULL, 'Derzeitiges Passwort beibehalten', 'Retain current password');
+	
+
+Version 0.4b
+	edit File
+		folder/add_newfile.php							edit AZ Register
+		folder/add_newlink.php							add AZ Register
+		folder/edit_file.php							edit AZ Register
+		folder/edit_link.php							edit AZ Register
+		folder/index.php								modification to enable multiple fileupload
+		folder/job.php									add AZ Register, multiple fileupload
+		folder/multiupload.php							multiple fileupload
+		folder/upload.php								multiple fileupload
+		inc/class/plupload/								folder added for the plupload-package (multiple fileupload)
+		inc/class/FileUpload.php						modification to enable multiple fileupload
+		inc/class/LinkJobs.php							add AZ Register insert_az_link_register_keys()
+		inc/class/Mailer.php							minor bugfix
+		inc/class/PDF.php								added _GetX() and _GetY()
+		inc/class/Tree.php								2 minor bugfixes
+		inc/function.php								modification to enable multiple fileupload
+		inc/pdf_footer.php								added support for TCPDF 5 
+		inc/pdf_header.php								added support for TCPDF 5
+		setup/edit_mail.php								displays now the current php.ini setting of sendmail_path
+		template/default/pic/_plupload_background.gif	multiple fileupload
+		web_services/fom_az_register.php				add link AZ Register
+		web_services/fom_link.php						add link AZ Register
+	
+	add file
+		template/default/pic/_plupload_background.gif	multiple fileupload
+		template/default/pic/_plupload_buttons.png		multiple fileupload
+		template/default/pic/_plupload_buttons-disabled.png	multiple fileupload
+		template/default/pic/_plupload_transp50.png		multiple fileupload
+		template/default/plupload.css					multiple fileupload
+
+	edit DB
+		ALTER TABLE fom_file_job_copy ADD job_time VARCHAR(14) NOT NULL DEFAULT '00000000000000';
+		ALTER TABLE fom_file_job_index ADD job_time VARCHAR(14) NOT NULL DEFAULT '00000000000000';
+		ALTER TABLE fom_file_job_tn ADD job_time VARCHAR(14) NOT NULL DEFAULT '00000000000000';		
+	
+		CREATE TABLE fom_search_word_az_link (
+		word_id int(10) unsigned NOT NULL default '0',
+		link_id int(10) unsigned NOT NULL default '0',
+		sign char(1) default NULL,
+		KEY sign_index (sign),
+		KEY link_index (link_id)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Speichert die AZ Registerzuordnungen';
+		
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (342, NULL, 'success_message', NULL, '[var]anzahl_ok[/var] Dateien wurden erfolgreich hochgeladen!', '[var]anzahl_ok[/var] files were successfully saved.');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (343, NULL, 'error_message', NULL, '[var]anzahl_error[/var] Datei(en) konnte(n) nicht hochgeladen werden!', '[var]anzahl_error[/var] file(s) could not be saved!');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (344, NULL, 'system', NULL, 'Mehrfach-Dateiupload', 'Multiple fileupload');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (345, NULL, 'system', NULL, 'Ihr Browser unterstützt diese Funktion leider nicht. Bitte versuchen Sie es statt dessen mit Firefox 3, Google Chrome oder Safari 4.', 'You browser doesn&#039;t support native upload. Try Firefox 3, Google Chrome or Safari 4.');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (346, NULL, 'multiupload', NULL, 'Dateien auswählen', 'Select files');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (347, NULL, 'multiupload', NULL, 'Fügen Sie Dateien zur Warteschlange hinzu und klicken Sie auf Start.', 'Add files to the upload queue and click the start button.');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (348, NULL, 'multiupload', NULL, 'Status', 'Status');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (349, NULL, 'multiupload', 'Dateigröße', 'Größe', 'Size');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (350, NULL, 'multiupload', 'Drag & Drop Beschreibung', 'Ziehen Sie die Dateien hier herein.', 'Drag files here.');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (351, NULL, 'multiupload', NULL, 'Dateien hinzufügen', 'Add files');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (352, NULL, 'multiupload', NULL, 'Start', 'Start upload');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (353, NULL, 'system', NULL, 'Derzeitige Server-Einstellung (php.ini)', 'Current server value (php.ini)');
+
+
+
+Version 0.3b
+	bugfixing:
+		web_services/fom_files.php			in function add_files() war ISO-8859-1 nicht als string uebergeben also ohne ''
+		inc/class/ChkVariable.php			fixed chk_vars() to work correctly with float values
+		inc/class/Search.php				Dateien und Link mit dem selben Primary konnten nicht gleichzeitig angezeigt werden.
+		inc/calendar.php					charset von iso-8859-1 zu UTF-8 geändert
+	
+	edit File
+		folder/add_fileversion.php			show upload_max_filesize
+		folder/add_newfile.php				show upload_max_filesize
+		folder/add_subfile.php				show upload_max_filesize
+		folder/job.php						Verzeichnis- und Dateinamen prüfung geändert.
+		folder/search.php					Datumssuche und PDF ausgabe hinzugefügt.
+		inc/class/Download.php				keine Doppelten Dowanloadlinks mehr
+		inc/class/FileJobs.php				Beim Upload werden Thumbnail und Index nurnoch sofort erstellt wenn die Dateien kleiner 1 MB sind 
+		inc/class/FileUpload.php			Verzeichnis- und Dateinamen prüfung geändert.
+		inc/class/GlobalVars.php			add FOM_LOGIN_COOKIE 
+		inc/class/Import.php				Verzeichnis- und Dateinamen prüfung geändert.
+		inc/class/VersionHistory.php		add get_version_number(), Gibt die aktuelle Versionsnummer zu einer Datei zurueck
+		inc/class/Search.php				Datumssuche hinzugefügt
+		inc/getsetup.php					add FOM_LOGIN_COOKIE
+		inc/include.php						__autoload() TCPDF hinzugefügt
+		inc/function.php					folder_action_menue() add PDF Filelist button
+		
+		
+	add file
+		files/logo/logo_default.jpg			Default Logo für PDF Erstellung
+		inc/class/tcpdf/*					TCPDF Klasse hinzugefügt
+		inc/class/Pdf.php					PDF Klasse
+		inc/pdf_header.php					Kopfzeile in allen PDF Reports
+		inc/pdf_footer						Fußzeile in allen PDF Reports
+		report/pdf_search.php				PDF Ausgabe der Suchergebnisse
+		report/pdf_filelist.php				PDF Dateiliste des Aktuellen Verzeichnisses bzw. Projektes
+		template/default/pic/_doc_dwg.gif
+		template/default/pic/_relevance_empty.png
+		template/default/pic/_relevance.png		
+		
+	edit DB
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (327, NULL, 'system', NULL, 'Dateiliste erstellen', 'Create filelist');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (328, NULL, 'system', NULL, 'Dateiliste von &quot;[path]&quot;', 'Filelist from &quot;[path]&quot;'); 
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (329, NULL, 'system', NULL, 'Datum', 'Date');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (330, NULL, 'system', NULL, 'Dateiliste', 'Filelist');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (331, NULL, 'system', NULL, 'Dokument', 'Document');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (332, NULL, 'system', NULL, 'Erstellt von', 'Created by');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (333, NULL, 'system', NULL, 'Suche im Verzeichnis &quot;[path]&quot;', 'Search in directory &quot;[path]&quot;');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (334, NULL, 'system', NULL, 'Suche im Projekt &quot;[path]&quot;', 'Search in project &quot;[path]&quot;');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (335, NULL, 'system', NULL, 'Erstellungsdatum', 'Creation date');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (336, NULL, 'system', NULL, 'vor', 'before');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (337, NULL, 'system', NULL, 'nach', 'after');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (338, NULL, 'system', NULL, 'PDF Erstellen', 'Create PDF');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (339, NULL, 'system', NULL, 'Suchergebnis', 'Search Results');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (340, NULL, 'system', 'nach dem 01.02.2010', 'nach dem', 'after the');
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES (341, NULL, 'system', 'vor dem 01.02.2010', 'vor dem', 'before the');
+		
+		ALTER TABLE fom_folder CHANGE folder_name folder_name VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+		ALTER TABLE fom_download ADD downloads INT UNSIGNED NOT NULL DEFAULT '0';
+		ALTER TABLE fom_access CHANGE access access TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		ALTER TABLE fom_document_type CHANGE document_type document_type VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		ALTER TABLE fom_file_job_copy CHANGE save_name save_name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		ALTER TABLE fom_file_job_index CHANGE save_name save_name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_file_job_tn CHANGE file_id file_id INT(10) UNSIGNED NOT NULL DEFAULT '0',
+		CHANGE save_name save_name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE save_time save_time VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_file_server CHANGE typ typ VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE pfad pfad VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_folder CHANGE folder_name folder_name VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_languages CHANGE language_name language_name VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE column_fom_text column_fom_text VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_link CHANGE folder_id folder_id INT(10) UNSIGNED NOT NULL DEFAULT '0',
+		CHANGE file_server_id file_server_id INT(10) UNSIGNED NOT NULL DEFAULT '0',
+		CHANGE user_id user_id INT(10) UNSIGNED NOT NULL DEFAULT '0',
+		CHANGE name name VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE link link VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE md5_link md5_link CHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE save_time save_time CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE bemerkungen bemerkungen TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE tagging tagging VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_reload CHANGE reload_id reload_id CHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE expire_time expire_time CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_search_cache CHANGE seach_key seach_key VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE search_result search_result TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE search_time search_time VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_search_word_az_file CHANGE word_id word_id INT(10) UNSIGNED NOT NULL DEFAULT '0',
+		CHANGE file_id file_id INT(10) UNSIGNED NOT NULL DEFAULT '0',
+		CHANGE sub_fileid sub_fileid INT(10) UNSIGNED NOT NULL DEFAULT '0',
+		CHANGE sign sign CHAR(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_setup CHANGE backup backup TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE mail mail TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE contact contact TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE fom_version fom_version VARCHAR(12) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE fom_title fom_title VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE date_format date_format VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE template template VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_user CHANGE loginname loginname VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE pw pw VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE timeout timeout VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE language_id language_id INT(11) UNSIGNED NOT NULL DEFAULT '1';
+		
+		ALTER TABLE fom_user_membership CHANGE user_id user_id INT(10) NOT NULL DEFAULT '0',
+		CHANGE usergroup_id usergroup_id INT(10) NOT NULL DEFAULT '0';
+		
+		ALTER TABLE fom_webservice_access CHANGE expire expire CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+Version 0.2b
+	bugfixing:
+		/*							all files
+		
+	edit File
+		/*							all files
+	
+	add File
+		folder/del_link.php
+		folder/edit_link.php
+		folder/welcome.php
+		inc/get_thumbnail.php
+		inc/class/FileFolderDel.php
+		inc/class/GlobalVars.php
+		inc/class/LinkJobs.php
+		inc/class/Login.php
+		inc/class/ReadLink.php
+		inc/class/Thumbnail.php
+		setup/edit_ex_prog.php
+		user_group/edit_user_folder.php
+		user_group/edit_usergroup_folder.php
+		web_services/*
+		
+	del File
+		inc/session2db.php
+		inc/class/SessionLogin.php
+		inc/class/Upload.php
+		inc/class/UserAccess.php
+		pic/*
+		inc/exec/*
+		
+	del define
+		config/config.php			das define FOM_ABS_PFAD_EXEC wird nicht laenger benoetigt
+
+	edit DB
+		ALTER TABLE fom_files CHANGE org_name org_name VARCHAR(255) NULL DEFAULT NULL, CHANGE save_name save_name VARCHAR(255) NULL DEFAULT NULL;
+			
+		CREATE TABLE IF NOT EXISTS fom_file_job_tn (
+		job_id int(10) unsigned NOT NULL auto_increment,
+		file_id int(10) unsigned NOT NULL,
+		save_name varchar(40) NOT NULL,
+		save_time varchar(14) NOT NULL,
+		PRIMARY KEY  (job_id),
+		KEY file_id (file_id),
+		KEY savetime_index (save_time(6))
+		) ENGINE=MyISAM AUTO_INCREMENT=1;
+		
+		
+		CREATE TABLE IF NOT EXISTS fom_link (
+		link_id int(10) unsigned NOT NULL auto_increment,
+		folder_id int(10) unsigned NOT NULL,
+		file_server_id int(10) unsigned NOT NULL,
+		user_id int(10) unsigned NOT NULL,
+		file_id int(10) unsigned NOT NULL default '0' COMMENT 'nur bei internen links',
+		name varchar(255) NOT NULL,
+		link varchar(255) NOT NULL,
+		md5_link char(32) NOT NULL,
+		save_time char(14) NOT NULL,
+		bemerkungen text NOT NULL,
+		tagging varchar(255) NOT NULL,
+		link_type set('EXTERNAL','INTERNAL') NOT NULL default 'EXTERNAL',
+		anzeigen set('0','1') NOT NULL default '1',
+		PRIMARY KEY  (link_id),
+		KEY folder_id_index (folder_id),
+		KEY show_index (anzeigen),
+		KEY type_index (link_type),
+		KEY file_id_index (file_id)
+		) ENGINE=MyISAM AUTO_INCREMENT=1 COMMENT='Links';
+		
+		CREATE TABLE IF NOT EXISTS fom_search_word_az_file (
+		word_id int(10) unsigned NOT NULL,
+		file_id int(10) unsigned NOT NULL,
+		sub_fileid int(10) unsigned NOT NULL,
+		sign char(1) NOT NULL,
+		KEY sign_index (sign),
+		KEY file_index (file_id),
+		KEY sub_file_idex (sub_fileid)
+		) ENGINE=MyISAM COMMENT='Speichert die AZ Registerzuordnungen';
+		
+		CREATE TABLE IF NOT EXISTS fom_search_word_link (
+		word_id int(10) unsigned NOT NULL,
+		link_id int(10) unsigned default '0',
+		tagging set('1','0') NOT NULL default '0',
+		KEY word_id (word_id,link_id,tagging)
+		) ENGINE=MyISAM;
+		
+		CREATE TABLE IF NOT EXISTS fom_user_membership (
+		user_id int(10) NOT NULL,
+		usergroup_id int(10) NOT NULL,
+		KEY select_index (user_id,usergroup_id)
+		) ENGINE=MyISAM COMMENT='stores the group-memberships for each user';
+		
+		ALTER TABLE fom_file_job_index ADD link_id INT UNSIGNED NULL DEFAULT '0' AFTER file_id;
+		
+		ALTER TABLE fom_file_job_index CHANGE file_id file_id INT(10) UNSIGNED NULL DEFAULT '0';
+		
+		ALTER TABLE fom_setup ADD other_settings TEXT NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_user_group DROP access;
+		
+		ALTER TABLE fom_user DROP usergroup_id;
+		
+		INSERT INTO fom_text (text_id, text_key, category, comment, language_1, language_2) VALUES
+		(287, NULL, 'system', NULL, 'Bitte geben Sie einen Link an!', 'Please enter a link!'),
+		(288, NULL, 'system', NULL, 'Link hinzufügen', 'Add link'),
+		(289, NULL, 'system', NULL, 'Link', 'Link'),
+		(290, NULL, 'system', NULL, 'Internet Link', 'Internet Link'),
+		(291, NULL, 'system', NULL, 'SSL Internet Link', 'SSL Internet Link'),
+		(292, NULL, 'system', NULL, 'Laufwerkspfad', 'Local path'),
+		(293, NULL, 'system', NULL, 'FTP Link', 'FTP Link'),
+		(294, NULL, 'system', NULL, 'Linkname', 'Linkname'),
+		(295, NULL, 'system', NULL, 'Link löschen', 'Delete link'),
+		(296, NULL, 'system', NULL, 'Möchten Sie diesen Link wirklich löschen?', 'Do you really want to delete this link?'),
+		(297, NULL, 'system', NULL, 'Link bearbeiten', 'Edit link'),
+		(298, NULL, 'system', NULL, 'Der Link wurde gespeichert.', 'The link was successfully saved.'),
+		(299, NULL, 'system', NULL, 'Der Link wurde gelöscht.', 'The link was deleted.'),
+		(300, NULL, 'system', NULL, 'Dateiverknüpfung', 'Filelink'),
+		(301, NULL, 'system', NULL, 'Öffnen', 'Open'),
+		(302, NULL, 'system', NULL, 'Bitte aktivieren Sie Cookies in Ihrem Internetbrowser!', 'Please enable cookies in your internet browser!'),
+		(303, NULL, 'system', '', 'Anfangsbuchstaben verwenden', 'Use first character'),
+		(304, NULL, 'system', NULL, 'Zahlen', 'Numbers'),
+		(305, NULL, 'system', NULL, 'Buchstaben', 'Alphabetic characters'),
+		(306, NULL, 'system', NULL, 'Sonderzeichen', 'Special char'),
+		(307, NULL, 'system', NULL, 'Standardupload', 'Standard upload'),
+		(308, NULL, 'system', NULL, 'A-Z Register Upload', 'A-Z Register Upload'),
+		(309, NULL, 'system', NULL, 'Keywords für das A-Z Register definieren', 'Define keywords for the A-Z register'),
+		(310, NULL, 'system', NULL, 'Zeichen', 'Character'),
+		(311, NULL, 'system', NULL, 'Wort', 'Word'),
+		(312, NULL, 'system', NULL, 'Benutzergruppenrechte auf Projektebene bearbeiten', 'Edit usergroup authorizations for projects'),
+		(313, NULL, 'system', NULL, 'Benutzergruppenrechte auf Verzeichnis- / Datei- / Linkebene  bearbeiten', 'Edit usergroup authorizations for folders / files / links'),
+		(314, NULL, 'system', NULL, 'Benutzerrechte auf Verzeichnis- / Datei- / Linkebene  bearbeiten', 'Edit user authorizations for folders / files / links'),
+		(315, NULL, 'system', NULL, 'Möchten Sie die Zugriffsrechte wirklich löschen?', 'Do you really want to delete these authorizations?'),
+		(316, NULL, 'system', NULL, 'Zugriffsrechte für Benutzer', 'User access authorizations'),
+		(317, NULL, 'system', NULL, 'Benutzer', 'User'),
+		(318, NULL, 'system', NULL, 'Zugriffsrechte löschen', 'Delete access authorizations'),
+		(319, NULL, 'system', 'Zugriffsrechte für die Benutzergruppe [Benutzergruppenname]', 'Zugriffsrechte für die Benutzergruppe', 'Access authorizations for usergroup'),
+		(320, NULL, 'system', NULL, 'Willkommen', 'Welcome'),
+		(321, NULL, 'system', NULL, 'Willkommen in File-O-Meter', 'Welcome to File-O-Meter'),
+		(322, NULL, 'system', NULL, 'Das OpenSource DMS File-O-Meter ist ein webbasiertes Dokumentenmanagementsystem zur Ablage und Archivierung von Dokumenten und Dateien. File-O-Meter dient als Plattform zur Zusammenarbeit (Collaboration) und zum Datenaustausch. Die Ablagestruktur untergliedert sich in Projekte. Innerhalb eines Projektverzeichnisses befinden sich die zugehörigen Unterverzeichnisse und Dokumente.', 'The open source application File-O-Meter is a web-based Document Management System for filing and archiving documents and files. File-O-Meter provides a corporate platform for cooperation, collaboration and data sharing. The filing system is structured into projects. Within a project folder there are the concerning subfolders and documents.'),
+		(323, NULL, 'system', NULL, 'Sollten Sie im Menü Ihre gewünschten Projektordner oder Verzeichnisse vermissen, wenden Sie sich bitte an den für das DMS verantwortlichen Projektleiter. In diesem Fall wurden die entsprechenden Ordner möglicherweise noch nicht angelegt oder Sie verfügen nicht über die erforderlichen Zugriffsrechte.', 'Please contact the project leader, responsible for the DMS, if you are missing your wanted project folders or directories within the menu. In this case the concerning folders have to be created first or you are not authorized to access the data at this time.'),
+		(324, NULL, 'system', NULL, 'Externe Anwendungen', 'External applications'),
+		(325, NULL, 'system', NULL, 'Bitte geben Sie Ihre Installationspfade zu den folgenden Anwendungen an. Achtung, geben Sie immer nur den Pfad zum Installationsverzeichnis an, nicht den Pfad zur Programmdatei. Zum Beispiel /yourpath/antiword/ nicht /yourpath/antiword/antiword. Achten Sie darauf, dass alle Pfadangaben mit einem / bzw. \\ enden!', 'Please enter your installation paths to the following applications. Attention, please make sure to enter the path to the installation directory, not to the program file. For instance /yourpath/antiword/ but not /yourpath/antiword/antiword. All path values have to end with a slash / or backslash \\!'),
+		(326, NULL, 'system', NULL, 'Besuchen Sie [var]website[/var] für weitere Informationen über [var]program[/var].', 'Visit [var]website[/var] for more information about [var]program[/var].');
+	
+		
+		/**
+		* Wird nur bei DB benoetigt die nicht von SF kommen
+		*/
+		//XXX durch entsprechende Datenbank ersetzen
+		ALTER DATABASE XXX DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		//Alle Tabellen auf UTF-8 umstellen
+		ALTER TABLE fom_access DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+	
+		ALTER TABLE fom_backup DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_document_type DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_document_type_file DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_download DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_file_job_copy DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_file_job_index DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_file_job_tn DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_file_lock DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_file_server DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_file_subversion DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_files DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_folder DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_languages DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_link DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_projekte DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_reload DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_search_cache DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_search_stopword DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_search_word DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_search_word_az_file DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_search_word_file DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_search_word_link DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_session DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_setup DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_sub_files DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_text DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_user DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_user_group DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_user_membership DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		ALTER TABLE fom_webservice_access DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+		
+		//Tabellenspalten umstellen
+		ALTER TABLE fom_access CHANGE type type VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+		CHANGE access access VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+		
+		ALTER TABLE fom_backup CHANGE backup_time backup_time VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE filename filename VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE type type VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE beschreibung beschreibung VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_document_type CHANGE document_type document_type VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+		
+		ALTER TABLE fom_download CHANGE md5 md5 CHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+		CHANGE only_current_version only_current_version SET('0', '1') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1',
+		CHANGE save_time save_time CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '00000000000000',
+		CHANGE public public SET('0', '1') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0',
+		CHANGE expire expire CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '00000000000000';
+		
+		ALTER TABLE fom_files CHANGE org_name org_name VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE org_name_no_iso org_name_no_iso VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE save_name save_name VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE md5_file md5_file VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE mime_type mime_type VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE save_time save_time VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '00000000000000',
+		CHANGE bemerkungen bemerkungen TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE tagging tagging VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE file_type file_type VARCHAR(7) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'PRIMARY',
+		CHANGE anzeigen anzeigen SET('0', '1') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1';
+		
+		ALTER TABLE fom_file_job_copy CHANGE save_name save_name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE save_time save_time VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '00000000000000';
+		
+		ALTER TABLE fom_file_job_index CHANGE save_name save_name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE save_time save_time VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '00000000000000';
+		
+		ALTER TABLE fom_file_job_tn CHANGE save_name save_name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE save_time save_time VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+		
+		ALTER TABLE fom_file_server CHANGE name name VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE typ typ VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE pfad pfad VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE setup setup TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_file_subversion CHANGE org_name org_name VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE save_name save_name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE md5_file md5_file VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE mime_type mime_type VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE save_time save_time VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '00000000000000',
+		CHANGE file_type file_type VARCHAR(7) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'PRIMARY';
+		
+		ALTER TABLE fom_folder CHANGE folder_name folder_name VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE bemerkungen bemerkungen TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE anzeigen anzeigen SET('0', '1') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1';
+		
+		ALTER TABLE fom_languages CHANGE column_ds_text column_fom_text VARCHAR(10) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL; 
+		
+		ALTER TABLE fom_languages CHANGE language_name language_name VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE column_fom_text column_fom_text VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE always_visible always_visible CHAR(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'n',
+		CHANGE visible visible CHAR(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_link CHANGE name name VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE link link VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE md5_link md5_link CHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE save_time save_time CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE bemerkungen bemerkungen TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE tagging tagging VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE link_type link_type SET('EXTERNAL', 'INTERNAL') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'EXTERNAL',
+		CHANGE anzeigen anzeigen SET('0', '1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1';
+		
+		ALTER TABLE fom_projekte CHANGE projekt_name projekt_name VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_reload CHANGE reload_id reload_id CHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE expire_time expire_time CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+		
+		ALTER TABLE fom_search_cache CHANGE seach_key seach_key VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE search_result search_result TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE search_time search_time VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+		
+		ALTER TABLE fom_search_stopword CHANGE word word VARCHAR(75) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_search_word CHANGE word word VARCHAR(75) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_search_word_az_file CHANGE sign sign CHAR(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+		
+		ALTER TABLE fom_search_word_file CHANGE tagging tagging SET('0', '1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';
+		
+		ALTER TABLE fom_search_word_link CHANGE tagging tagging SET('1', '0') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';
+		
+		ALTER TABLE fom_session CHANGE sess_key sess_key VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE sess_value sess_value MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE sess_expiry sess_expiry VARCHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_setup CHANGE backup backup TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE mail mail TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE contact contact TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE fom_version fom_version VARCHAR(12) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE fom_title fom_title VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE date_format date_format VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE template template VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE other_settings other_settings TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_user CHANGE vorname vorname VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE nachname nachname VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE email email VARCHAR(75) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE loginname loginname VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE pw pw VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE session_key session_key VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE login_ip login_ip VARCHAR(23) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+		CHANGE timeout timeout VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE login_aktiv login_aktiv SET('0', '1') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1';
+		
+		ALTER TABLE fom_user_group CHANGE usergroup usergroup VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+		
+		ALTER TABLE fom_webservice_access CHANGE ws_key ws_key CHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		CHANGE expire expire CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

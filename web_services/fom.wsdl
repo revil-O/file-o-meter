@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/fom/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="fom" targetNamespace="http://www.example.org/fom/">
+  
+  <!-- Verzeichnisoperationen -->
+  
+  <!-- add folder -->
+  <wsdl:message name="add_folderRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+    <wsdl:part name="folder_name" type="xsd:string"/>
+    <wsdl:part name="folder_desc" type="xsd:string"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="add_folderResponse">
+    <wsdl:part name="add_folderResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get folder -->
+  <wsdl:message name="get_folderRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="get_folderResponse">
+    <wsdl:part name="get_folderResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- edit_folder -->
+  <wsdl:message name="edit_folderRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+    <wsdl:part name="folder_name" type="xsd:string"/>
+    <wsdl:part name="folder_desc" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="edit_folderResponse">
+    <wsdl:part name="edit_folderResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  
+  <!-- Dateioperationen -->
+  
+  <!-- add file -->
+  <wsdl:message name="add_filesRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="file_name" type="xsd:string"/>
+    <wsdl:part name="file_data" type="xsd:string"/>
+    <wsdl:part name="file_id" type="xsd:int"/>
+    <wsdl:part name="file_type" type="xsd:string"/>
+    <wsdl:part name="filecomment_string" type="xsd:string"/>
+    <wsdl:part name="filesearch_string" type="xsd:string"/>
+    <wsdl:part name="document_type" type="xsd:string"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="add_filesResponse">
+    <wsdl:part name="add_filesResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get filelist -->
+  <wsdl:message name="get_filesRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+    <wsdl:part name="doctype_id" type="xsd:int"/>
+    <wsdl:part name="file_comment" type="xsd:string"/>
+    <wsdl:part name="order_by" type="xsd:string"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+    <wsdl:part name="recursive" type="xsd:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="get_filesResponse">
+    <wsdl:part name="get_filesResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get file_data -->
+  <wsdl:message name="get_file_dataRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="file_id" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="get_file_dataResponse">
+    <wsdl:part name="get_file_dataResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get_one_file -->
+  <wsdl:message name="get_one_fileRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="file_id" type="xsd:int"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="get_one_fileResponse">
+    <wsdl:part name="get_one_fileResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get_fileexists -->
+  <wsdl:message name="get_file_existsRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="get_file_existsResponse">
+    <wsdl:part name="get_file_existsResponse" type="xsd:string"/>
+  </wsdl:message>  
+  
+  <!-- Linkoperationen -->
+  
+  <!-- add link -->
+  <wsdl:message name="add_linkRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+    <wsdl:part name="link_string" type="xsd:string"/>
+    <wsdl:part name="protokoll_string" type="xsd:string"/>
+    <wsdl:part name="link_name_string" type="xsd:string"/>
+    <wsdl:part name="tagging_string" type="xsd:string"/>
+    <wsdl:part name="linkcomment_string" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="add_linkResponse">
+    <wsdl:part name="add_linkResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get linklist -->
+  <wsdl:message name="get_linksRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+    <wsdl:part name="file_comment" type="xsd:string"/>
+    <wsdl:part name="order_by" type="xsd:string"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+    <wsdl:part name="recursive" type="xsd:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="get_linksResponse">
+    <wsdl:part name="get_linksResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+   <!-- get_linkexists -->
+  <wsdl:message name="get_link_existsRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="get_link_existsResponse">
+    <wsdl:part name="get_link_existsResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- Datei- und Linkoperationen -->
+  
+  <!-- get_one_link -->
+  <wsdl:message name="get_one_linkRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="link_id" type="xsd:int"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="get_one_linkResponse">
+    <wsdl:part name="get_one_linkResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- del_file_link -->
+  <wsdl:message name="del_file_linkRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="file_id" type="xsd:int"/>
+    <wsdl:part name="link_id" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="del_file_linkResponse">
+    <wsdl:part name="del_file_linkResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get file_linklist -->
+  <wsdl:message name="get_files_and_linksRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+     <wsdl:part name="doctype_id" type="xsd:int"/>
+    <wsdl:part name="comment" type="xsd:string"/>
+    <wsdl:part name="order_by" type="xsd:string"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+    <wsdl:part name="recursive" type="xsd:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="get_files_and_linksResponse">
+    <wsdl:part name="get_files_and_linksResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get_file_link_exists -->
+  <wsdl:message name="get_file_link_existsRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="get_file_link_existsResponse">
+    <wsdl:part name="get_file_link_existsResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- Sonstiges -->
+  
+  <!-- get doctype(s) -->
+  <wsdl:message name="get_doctypesRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="doctype_id" type="xsd:int"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="get_doctypesResponse">
+    <wsdl:part name="get_doctypesResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get project(s) -->
+  <wsdl:message name="get_projectsRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="get_projectsResponse">
+    <wsdl:part name="get_projectsResponse" type="xsd:string"/>
+  </wsdl:message>
+
+  <!-- A-Z Register -->
+    
+  <!-- get_az_register_file -->
+  <wsdl:message name="get_az_register_fileRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="file_id" type="xsd:int"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="get_az_register_fileResponse">
+    <wsdl:part name="get_az_register_fileResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get_az_register_folder -->
+  <wsdl:message name="get_az_register_folderRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="folder_id" type="xsd:int"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="get_az_register_folderResponse">
+    <wsdl:part name="get_az_register_folderResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- get_az_register_project -->
+  <wsdl:message name="get_az_register_projectRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="project_id" type="xsd:int"/>
+    <wsdl:part name="return_type" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="get_az_register_projectResponse">
+    <wsdl:part name="get_az_register_projectResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <!-- insert_az_register -->
+  <wsdl:message name="insert_az_registerRequest">
+    <wsdl:part name="ws_key" type="xsd:string"/>
+    <wsdl:part name="file_id" type="xsd:int"/>
+    <wsdl:part name="sign_string" type="xsd:string"/>
+    <wsdl:part name="word_string" type="xsd:string"/>
+    <wsdl:part name="is_subfile" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="insert_az_registerResponse">
+    <wsdl:part name="insert_az_registerResponse" type="xsd:string"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="fom">
+  	
+  	<!-- add link -->
+  	<wsdl:operation name="add_link">
+      <wsdl:input message="tns:add_linkRequest"/>
+      <wsdl:output message="tns:add_linkResponse"/>
+    </wsdl:operation>
+    
+    <!-- del_file_link -->
+  	<wsdl:operation name="del_file_link">
+      <wsdl:input message="tns:del_file_linkRequest"/>
+      <wsdl:output message="tns:del_file_linkResponse"/>
+    </wsdl:operation>
+    
+    <!-- get_one_link -->
+  	<wsdl:operation name="get_one_link">
+      <wsdl:input message="tns:get_one_linkRequest"/>
+      <wsdl:output message="tns:get_one_linkResponse"/>
+    </wsdl:operation>
+    
+  	<!-- get filelist -->
+  	<wsdl:operation name="get_files">
+      <wsdl:input message="tns:get_filesRequest"/>
+      <wsdl:output message="tns:get_filesResponse"/>
+    </wsdl:operation>
+    
+    <!-- get linklist -->
+  	<wsdl:operation name="get_links">
+      <wsdl:input message="tns:get_linksRequest"/>
+      <wsdl:output message="tns:get_linksResponse"/>
+    </wsdl:operation>
+    
+    <!-- get file_linklist -->
+  	<wsdl:operation name="get_files_and_links">
+      <wsdl:input message="tns:get_files_and_linksRequest"/>
+      <wsdl:output message="tns:get_files_and_linksResponse"/>
+    </wsdl:operation>
+    
+    <!-- add file -->
+    <wsdl:operation name="add_files">
+      <wsdl:input message="tns:add_filesRequest"/>
+      <wsdl:output message="tns:add_filesResponse"/>
+    </wsdl:operation>
+    
+    <!-- get doctype(s) -->
+    <wsdl:operation name="get_doctypes">
+      <wsdl:input message="tns:get_doctypesRequest"/>
+      <wsdl:output message="tns:get_doctypesResponse"/>
+    </wsdl:operation>
+    
+    <!-- get project(s) -->
+    <wsdl:operation name="get_projects">
+      <wsdl:input message="tns:get_projectsRequest"/>
+      <wsdl:output message="tns:get_projectsResponse"/>
+    </wsdl:operation>
+    
+  	<!-- get folder -->
+  	<wsdl:operation name="get_folder">
+      <wsdl:input message="tns:get_folderRequest"/>
+      <wsdl:output message="tns:get_folderResponse"/>
+    </wsdl:operation>
+    
+  	<!-- add folder -->
+  	<wsdl:operation name="add_folder">
+      <wsdl:input message="tns:add_folderRequest"/>
+      <wsdl:output message="tns:add_folderResponse"/>
+    </wsdl:operation>
+    
+  	<!-- get_file_data -->
+  	<wsdl:operation name="get_file_data">
+      <wsdl:input message="tns:get_file_dataRequest"/>
+      <wsdl:output message="tns:get_file_dataResponse"/>
+    </wsdl:operation>
+    
+    <!-- get_link_exists -->
+  	<wsdl:operation name="get_link_exists">
+      <wsdl:input message="tns:get_link_existsRequest"/>
+      <wsdl:output message="tns:get_link_existsResponse"/>
+    </wsdl:operation>
+    
+    <!-- get_file_exists -->
+  	<wsdl:operation name="get_file_exists">
+      <wsdl:input message="tns:get_file_existsRequest"/>
+      <wsdl:output message="tns:get_file_existsResponse"/>
+    </wsdl:operation>
+    
+    <!-- get_file_link_exists -->
+  	<wsdl:operation name="get_file_link_exists">
+      <wsdl:input message="tns:get_file_link_existsRequest"/>
+      <wsdl:output message="tns:get_file_link_existsResponse"/>
+    </wsdl:operation>
+    
+    <!-- get_az_register_file -->
+  	<wsdl:operation name="get_az_register_file">
+      <wsdl:input message="tns:get_az_register_fileRequest"/>
+      <wsdl:output message="tns:get_az_register_fileResponse"/>
+    </wsdl:operation>
+    
+    <!-- get_az_register_folder -->
+  	<wsdl:operation name="get_az_register_folder">
+      <wsdl:input message="tns:get_az_register_folderRequest"/>
+      <wsdl:output message="tns:get_az_register_folderResponse"/>
+    </wsdl:operation>
+    
+    <!-- get_az_register_project -->
+  	<wsdl:operation name="get_az_register_project">
+      <wsdl:input message="tns:get_az_register_projectRequest"/>
+      <wsdl:output message="tns:get_az_register_projectResponse"/>
+    </wsdl:operation>
+    
+    <!-- insert_az_register -->
+  	<wsdl:operation name="insert_az_register">
+      <wsdl:input message="tns:insert_az_registerRequest"/>
+      <wsdl:output message="tns:insert_az_registerResponse"/>
+    </wsdl:operation>
+    
+    <!-- edit_folder -->
+  	<wsdl:operation name="edit_folder">
+      <wsdl:input message="tns:edit_folderRequest"/>
+      <wsdl:output message="tns:edit_folderResponse"/>
+    </wsdl:operation>
+    
+    <!-- get_one_file -->
+  	<wsdl:operation name="get_one_file">
+      <wsdl:input message="tns:get_one_fileRequest"/>
+      <wsdl:output message="tns:get_one_fileResponse"/>
+    </wsdl:operation>
+    
+  </wsdl:portType>
+  
+  <wsdl:binding name="fomSOAP" type="tns:fom">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    
+    <!-- add link -->
+    <wsdl:operation name="add_link">
+      <soap:operation soapAction="http://www.example.org/add_link/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/add_link/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/add_link/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- del_file_link -->
+    <wsdl:operation name="del_file_link">
+      <soap:operation soapAction="http://www.example.org/del_file_link/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/del_file_link/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/del_file_link/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get filelist -->
+    <wsdl:operation name="get_files">
+      <soap:operation soapAction="http://www.example.org/get_files/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_files/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_files/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get linklist -->
+    <wsdl:operation name="get_links">
+      <soap:operation soapAction="http://www.example.org/get_links/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_links/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_links/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get file_linklist -->
+    <wsdl:operation name="get_files_and_links">
+      <soap:operation soapAction="http://www.example.org/get_files_and_links/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_files_and_links/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_files_and_links/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- add file -->
+    <wsdl:operation name="add_files">
+      <soap:operation soapAction="http://www.example.org/add_files/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/add_files/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/add_files/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get doctype(s) -->
+    <wsdl:operation name="get_doctypes">
+      <soap:operation soapAction="http://www.example.org/get_doctypes/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_doctypes/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_doctypes/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get project(s) -->
+    <wsdl:operation name="get_projects">
+      <soap:operation soapAction="http://www.example.org/get_projects/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_projects/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_projects/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get folder -->
+    <wsdl:operation name="get_folder">
+      <soap:operation soapAction="http://www.example.org/get_folder/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_folder/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_folder/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- add folder -->
+    <wsdl:operation name="add_folder">
+      <soap:operation soapAction="http://www.example.org/add_folder/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/add_folder/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/add_folder/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get file_data -->
+    <wsdl:operation name="get_file_data">
+      <soap:operation soapAction="http://www.example.org/get_file_data/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_file_data/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_file_data/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get_link_exists -->
+    <wsdl:operation name="get_link_exists">
+      <soap:operation soapAction="http://www.example.org/get_link_exists/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_link_exists/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_link_exists/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get_file_exists -->
+    <wsdl:operation name="get_file_exists">
+      <soap:operation soapAction="http://www.example.org/get_file_exists/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_file_exists/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_file_exists/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get_file_link_exists -->
+    <wsdl:operation name="get_file_link_exists">
+      <soap:operation soapAction="http://www.example.org/get_file_link_exists/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_file_link_exists/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_file_link_exists/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get_az_register_file -->
+    <wsdl:operation name="get_az_register_file">
+      <soap:operation soapAction="http://www.example.org/get_az_register_file/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_az_register_file/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_az_register_file/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get_az_register_folder -->
+    <wsdl:operation name="get_az_register_folder">
+      <soap:operation soapAction="http://www.example.org/get_az_register_folder/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_az_register_folder/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_az_register_folder/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get_az_register_project -->
+    <wsdl:operation name="get_az_register_project">
+      <soap:operation soapAction="http://www.example.org/get_az_register_project/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_az_register_project/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_az_register_project/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- insert_az_register -->
+    <wsdl:operation name="insert_az_register">
+      <soap:operation soapAction="http://www.example.org/insert_az_register/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/insert_az_register/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/insert_az_register/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- edit_folder -->
+    <wsdl:operation name="edit_folder">
+      <soap:operation soapAction="http://www.example.org/edit_folder/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/edit_folder/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/edit_folder/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get_one_file -->
+    <wsdl:operation name="get_one_file">
+      <soap:operation soapAction="http://www.example.org/get_one_file/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_one_file/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_one_file/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <!-- get_one_link -->
+    <wsdl:operation name="get_one_link">
+      <soap:operation soapAction="http://www.example.org/get_one_link/"/>
+      <wsdl:input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_one_link/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.example.org/get_one_link/" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    
+  </wsdl:binding>
+  <wsdl:service name="fom">
+    <wsdl:port binding="tns:fomSOAP" name="fomSOAP">
+      <soap:address location="http://yourdomain.com/web_services/fom.php"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,28 @@
+body{font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#000000; text-align:center; margin:15px; background-color:#FFFFFF;}
+	
+a{text-decoration:none; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#000000;}
+.table{border:solid 1px; border-color:#000000; width:256px;}
+
+.header_1{background-color:#B6D35C; border-bottom:solid 1px; border-right:solid 1px; border-color:#000000; font-weight:bold; cursor:default;}
+.header_2{background-color:#B6D35C; border-bottom:solid 1px; border-color:#000000; font-weight:bold;}
+
+.date_1{background-color:#F0F0F0; border-bottom:solid 1px; border-right:solid 1px; border-color:#000000; padding-bottom:1px; padding-top:1px;}
+.date_2{background-color:#F0F0F0; border-bottom:solid 1px; border-color:#000000; padding-bottom:1px; padding-top:1px;}
+.select{font-size:9px; border:solid 1px; border-color:#000000; background-color:#FFFFFF; width:60px;}
+	
+.name_of_day{width:32px; padding-bottom:2px; padding-top:2px; background-color:#F0F0F0; border-bottom:solid 1px; border-right:solid 1px; border-color:#000000; cursor:default;}
+.name_of_day_2{width:32px; padding-bottom:2px; padding-top:2px; background-color:#F0F0F0; border-bottom:solid 1px; border-color:#000000; cursor:default;}
+.name_of_day_red{width:32px; color:#FF0000; padding-bottom:2px; padding-top:2px; background-color:#F0F0F0; border-bottom:solid 1px; border-right:solid 1px; border-color:#000000; cursor:default;}
+.name_of_day_red_2{width:32px; color:#FF0000; padding-bottom:2px; padding-top:2px; background-color:#F0F0F0; border-bottom:solid 1px; border-color:#000000; cursor:default;}
+
+.week_number{background-color:#F0F0F0; border-right:solid 1px; border-color:#000000; cursor:default;}
+
+.bg_content{background-color:#FFFFFF; height:16px; cursor:pointer; padding:0px;}
+
+.day_red{width:80%; color:#FF0000; border:solid 1px; border-color:#FFFFFF;}
+.day_aktiv_red{width:80%; color:#FF0000; display:block; font-weight:bold; border-left:solid 1px; border-left-color:#F0F0F0; border-top:solid 1px; border-top-color:#F0F0F0; border-right:solid 1px; border-right-color:#000000; border-bottom:solid 1px; border-bottom-color:#000000;}
+.day{width:80%; border:solid 1px; border-color:#FFFFFF;}
+.day_aktiv{width:80%; font-weight:bold; display:block; border-left:solid 1px; border-left-color:#F0F0F0; border-top:solid 1px; border-top-color:#F0F0F0; border-right:solid 1px; border-right-color:#000000; border-bottom:solid 1px; border-bottom-color:#000000;}
+.day_current{width:80%; color:#B6D35C; display:block; font-weight:bold; border-left:solid 1px; border-left-color:#000000; border-top:solid 1px; border-top-color:#000000; border-right:solid 1px; border-right-color:#F0F0F0; border-bottom:solid 1px; border-bottom-color:#F0F0F0;}
+
+.footer{background-color:#F0F0F0; border-top:solid 1px; border-top-color:#000000; cursor:default;}

@@ -1,0 +1,200 @@
+/* allgemeine Einstellungen */
+body {margin:10px 20px 10px 20px; padding:0px;}
+body, table, tr, td, div, span, p, a {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; color:#000000; text-decoration:none;}
+hr {height:1px; background-color:#015212; border:none;}
+/**
+* Schriftformatierung anfang
+*/
+	h1{font-size:16px; font-weight:bold; color:#00851C;}
+	h2{font-size:14px; font-weight:bold; color:#00851C;}
+	h3{font-size:13px; font-weight:bold; color:#00851C;}
+	h4{font-size:12px; font-weight:bold; color:#00851C;}
+	h5{font-size:11px; font-weight:bold; color:#00851C;}
+	
+	.font_10{font-size:10px;}
+	.font_11{font-size:11px;}
+	.font_13{font-size:13px;}
+	.font_14{font-size:14px;}
+	.font_15{font-size:15px;}
+	.font_16{font-size:16px;}
+	
+	.meldung{color:#009900;}
+	.warnung{color:#FF8000}
+	.error{color:#FF0000;}
+/**
+* Schriftformatierung ende
+*/
+
+/**
+* Imagedarstellung anfang
+*/
+.image{vertical-align:middle;}
+.image_button{vertical-align:middle; cursor:pointer;}
+/**
+* Imagedarstellung ende
+*/
+
+/* Haupt Tabellen (die mit der H1 Überschrift)*/
+.main_table_header{background-image:url(../../template/default/pic/_main_table_header.png); background-repeat:no-repeat; font-size:14px; font-weight:bold; color:#000000; height:30px; padding-left:12px; border-right:solid 1px; border-right-color:#000000; padding-top:0px; padding-bottom:0px;}
+.main_table_content{padding:11px; border:solid 1px; border-top:solid 1px; background-color:#FFFFFF;}
+
+.error_table_header{background-image:url(../../template/default/pic/_error_table_header.png); background-repeat:no-repeat; font-size:14px; font-weight:bold; color:#000000; height:30px; padding-left:12px; border-right:solid 1px; border-right-color:#000000;}
+.error_table_content{padding:11px; border:solid 1px; border-top:solid 1px; border-color:#FF0000; background-color:#FFFFFF;}
+
+.good_table_header{background-image:url(../../template/default/pic/_green_table_header.png); background-repeat:no-repeat; font-size:14px; font-weight:bold; color:#000000; height:30px; padding-left:12px; border-right:solid 1px; border-right-color:#000000;}
+.good_table_content{padding:11px; border:solid 1px; border-top:solid 1px; border-color:#009900; background-color:#FFFFFF;}
+
+.info_table_header{background-image:url(../../template/default/pic/_yellow_table_header.png); background-repeat:no-repeat; font-size:14px; color:#FFFFFF; height:30px; padding-left:12px; border-right:solid 1px; border-right-color:#000000;}
+.info_table_content{padding:11px; border:solid 1px; border-top:solid 1px; border-color:#FFD700; color:#000000; background-color:#FFFFFF;}
+
+/* Sonstiges */
+.border{border:solid 1px; border-color:#000000; background-color:#FFFFFF;}
+
+/* Suchdarstellung */
+.relevance_chart{background-color:#B6D35C;}
+.relevance_chart_empty{background-color:#F9B6AD;}
+.relevance_chart_box{width:50px; height:5px; border:solid 1px; border-color:#015212; background-color:#FFFFFF;}
+
+
+/**
+* contenttabelle anfang
+*/
+	.content_table{border:solid 1px; border-color:#015212;}
+	.content_header_1{border-left:3px solid #015212; background-color:#B6D35C; color:#000000; font-weight:bold;}
+	.content_header_2{background-color:#B6D35C; color:#000000; font-weight:bold;}
+	.content_tr_1{background-color:#F0F0F0;}
+	.content_tr_2{background-color:#FFFFFF;}
+	.content {padding-left:20px;}
+/**
+* contenttabelle ende
+*/
+
+/* Filter */
+.filter_td_1{border-bottom:solid 2px; border-right:solid 2px; border-color:#FFFFFF; background-color:#F0F0F0;}
+.filter_td_2{border-bottom:solid 2px; border-color:#FFFFFF; background-color:#F0F0F0;}
+.filter_tr_end{background-color:#F0F0F0;}
+
+/**
+* Forumlarelemente anfang
+*/
+	input{border:solid 1px; border-color:#015212; background-color:#BFD870; font-size:11px;}
+	textarea{border:solid 1px; border-color:#015212; background-color:#BFD870; font-size:11px;}
+	select{border:solid 1px; border-color:#015212; background-color:#BFD870; font-size:11px;}
+	.ipt_25{width:25px;}
+	.ipt_50{width:50px;}
+	.ipt_75{width:75px;}
+	.ipt_100{width:100px;}
+	.ipt_125{width:125px;}
+	.ipt_150{width:150px;}
+	.ipt_175{width:175px;}
+	.ipt_200{width:200px;}
+	.ipt_250{width:250px;}
+	.ipt_300{width:300px;}
+	.ipt_350{width:350px;}
+	.ipt_400{width:400px;}
+	
+	.submit{background-color:#BFD870;
+			font-weight:bold;
+			color:#345A7F;
+			border-color:#345A7F;
+			border-left:solid 1px;
+			border-top:solid 1px;
+			border-right:solid 2px;
+			border-bottom:solid 2px;}
+	
+	.reset{background-color:#BFD870;
+			font-weight:bold;
+			color:#B5B5B5;
+			border-color:#B5B5B5;
+			border-left:solid 1px;
+			border-top:solid 1px;
+			border-right:solid 2px;
+			border-bottom:solid 2px;}
+	
+	.submit_a, .submit_a a:link, .submit_a a:visited, .submit_a a:hover, .submit_a a:active { 
+		background-color:#BFD870;
+		color:#345A7F;
+		font-size:10px;
+		font-weight:bold;
+		padding-bottom:1px;
+		padding-left:7px;
+		padding-right:7px;
+		padding-top:1px;
+		text-decoration:none;
+		display:inline;
+		border-color:#345A7F;
+		border-top:1px solid;
+		border-right:2px solid;
+		border-bottom:2px solid;
+		border-left:1px solid;}
+	.reset_a, .reset_a a:link, .reset_a a:visited, .reset_a a:hover, .reset_a a:active { 
+		background-color:#BFD870;
+		color:#B5B5B5;
+		font-size:10px;
+		font-weight:bold;
+		padding-bottom:1px;
+		padding-left:7px;
+		padding-right:7px;
+		padding-top:1px;
+		text-decoration:none;
+		display:inline;
+		border-color:#B5B5B5;
+		border-top:1px solid;
+		border-right:2px solid;
+		border-bottom:2px solid;
+		border-left:1px solid;}
+/**
+* Forumlarelemente ende
+*/
+
+/**
+* Padding Anfang
+*/
+	.pad_10_left {padding-left:10px;}
+	.pad_10_leftright {padding-left:10px; padding-right:10px;}
+	.pad_10_right {padding-right:10px;}
+/**
+* Padding Ende
+*/
+
+/**
+* Einfügen Box Anfang
+*/
+.paste_box{z-index:1;
+			position:absolute;
+			margin-left:-400px;
+			width:450px;}
+.paste_line_1{background-color:#B6D35C;}
+.paste_line_2{background-color:#FFFFFF;}
+/**
+* Einfügen Box Ende
+*/
+
+/**
+* Verzeichnis bzw. Dateioptionsmenü Anfang
+*/
+.folder_action_menue{z-index:1;
+				position:absolute;
+				margin-left:-220px;
+				border:solid 1px;
+				border-color:#015212;
+				text-align:left;
+				width:250px;}
+
+.file_action_menue{z-index:1;
+				position:absolute;
+				margin-left:45px;
+				border:solid 1px;
+				border-color:#015212;
+				text-align:left;
+				width:250px;}
+
+.action_menue_line_1{background-color:#B6D35C;
+					width:246px;
+					padding:2px;}
+.action_menue_line_2{background-color:#FFFFFF;
+					width:246px;
+					padding:2px;}
+/**
+* Verzeichnis bzw. Dateioptionsmenü Ende
+*/
